@@ -43,4 +43,6 @@ class BotMeDaddy
   end
 end
 
+exit unless ((Time.now.hour % 2) == 0)
+
 BotMeDaddy.new.tweet

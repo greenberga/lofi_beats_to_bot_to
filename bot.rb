@@ -22,11 +22,17 @@ class BotMeDaddy
   end
 
   def next_phrase
-    phrase = all_phrases[all_phrases.find_index(most_recent_phrase) + 1].strip
+    phrase = all_phrases[next_phrase_index].strip
     unless phrase.include?(" me ")
       phrase += " me"
     end
     phrase + " daddy"
+  end
+
+  def next_phrase_index
+    this_index = all_phrases.find_index(most_recent_phrase)
+
+    this_index == all_phrases.length ? 0 : this_index + 1
   end
 
   def tweet

@@ -32,7 +32,7 @@ class BotMeDaddy
   def next_phrase_index
     this_index = all_phrases.find_index(most_recent_phrase)
 
-    this_index == all_phrases.length ? 0 : this_index + 1
+    (this_index + 1 == all_phrases.length) ? 0 : this_index + 1
   end
 
   def tweet

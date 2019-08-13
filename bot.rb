@@ -1,7 +1,7 @@
 require 'twitter'
 require 'open-uri'
 
-class BotMeDaddy
+class LofiBeatsToBotTo
 
   GIST_URL = 'https://gist.githubusercontent.com/farisj/732005bb9c6c1eee68ac2df315965286/raw'.freeze
 
@@ -10,29 +10,25 @@ class BotMeDaddy
   end
 
   def most_recent_tweet
-    twitter.user_timeline('bot_me_daddy').first.text
+    twitter.user_timeline('lofihiphop_bots').first.text
   end
 
   def most_recent_phrase
-    phrase = most_recent_tweet.match(/(.+) daddy/)[1]
-    if phrase.scan(/.+ me$/).length != 0
-      phrase = phrase[0..-4]
-    end
-    phrase
+    most_recent_tweet.match(/lofi hip hop beats - music to .+\/(.+) to/)[1]
   end
 
   def next_phrase
-    phrase = all_phrases[next_phrase_index].strip
-    unless phrase.include?(" me ")
-      phrase += " me"
-    end
-    phrase + " daddy"
+    first_index = next_phrase_index
+    second_index = (first_index + 1) % all_phrases.length
+
+    first = all_phrases[first_index].strip
+    second = all_phrases[second_index].strip
+
+    "lofi hip hop beats - music to #{first}/#{second} to"
   end
 
   def next_phrase_index
-    this_index = all_phrases.find_index(most_recent_phrase)
-
-    (this_index + 1 == all_phrases.length) ? 0 : this_index + 1
+    (all_phrases.find_index(most_recent_phrase) + 1) % all_phrases.length
   end
 
   def tweet
@@ -51,4 +47,4 @@ end
 
 exit unless ((Time.now.hour % 2) == 0)
 
-BotMeDaddy.new.tweet
+LofiBeatsToBotTo.new.tweet
